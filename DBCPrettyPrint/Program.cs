@@ -1,8 +1,10 @@
 ﻿using DBCLib;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace DBCPrettyPrint
 {
@@ -33,15 +35,24 @@ namespace DBCPrettyPrint
           if (entries != null)
           {
             Console.WriteLine("W {0}", fileDst);
-            using (Stream streamDst = new FileStream(fileDst, FileMode.Create, FileAccess.Write, FileShare.Read))
+            var currentCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            try
             {
-              using (StreamWriter streamWriter = new StreamWriter(streamDst, Encoding.Default))
+              using (Stream streamDst = new FileStream(fileDst, FileMode.Create, FileAccess.Write, FileShare.Read))
               {
-                foreach (object entry in entries)
+                using (StreamWriter streamWriter = new StreamWriter(streamDst, Encoding.Default))
                 {
-                  ((Entry)entry).WriteDBC(streamWriter);
+                  foreach (object entry in entries)
+                  {
+                    ((Entry)entry).WriteDBC(streamWriter);
+                  }
                 }
               }
+            }
+            finally
+            {
+              Thread.CurrentThread.CurrentCulture = currentCulture;
             }
           }
         }
