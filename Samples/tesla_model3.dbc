@@ -37,7 +37,7 @@ BU_:
 
 
 BO_ 950 ID3B6odometer: 4 Vector__XXX
- SG_ Odometer3B6 : 7|32@0+ (1,0) [0|4294967295] "Meter" Vector__XXX
+ SG_ Odometer3B6 : 0|32@1+ (1,0) [0|4294967295] "Meter" Vector__XXX
 
 BO_ 614 ID266: 8 Vector__XXX
  SG_ v12vInverter266 : 0|8@1+ (0.1,0) [0|0] "Volts" Vector__XXX
