@@ -22,7 +22,7 @@ namespace DBCLib
     static string stringRegexSubstring = @"(STRING)";
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+(?:(BO_|SG_)\s+)?{1}\s+(?:{2}|{3})\s*;?$",
+      string.Format(@"^{0}\s+(?:(BO_|BU_|SG_)\s+)?{1}\s+(?:{2}|{3})\s*;?$",
         Symbol,
         R.C.quotedStringValue,
         intRegexSubstring,
