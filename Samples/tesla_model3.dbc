@@ -1,0 +1,73 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 950 ID3B6odometer: 4 Vector__XXX
+ SG_ Odometer3B6 : 7|32@0+ (1,0) [0|4294967295] "Meter" Vector__XXX
+
+BO_ 614 ID266: 8 Vector__XXX
+ SG_ v12vInverter266 : 0|8@1+ (0.1,0) [0|0] "Volts" Vector__XXX
+
+BO_ 264 ID108: 8 Vector__XXX
+ SG_ RPMspeed108 : 40|16@1- (0.0078125,0) [0|0] "MPH" Vector__XXX
+
+BO_ 306 ID132: 8 Vector__XXX
+ SG_ BattVoltage132 : 0|16@1+ (0.01,0) [0|0] "Volts" Vector__XXX
+ SG_ RawBattCurrent132 : 32|16@1+ (-0.1,-20000) [0|0] "Amps" Vector__XXX
+ SG_ SmoothBattCurrent132 : 16|16@1+ (-0.2,-10000) [0|0] "Amps" Vector__XXX
+
+BO_ 294 ID126: 8 Vector__XXX
+ SG_ Demand126 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ BattVoltage126 : 0|16@1+ (0.5,0) [0|32767.5] "Volts" Vector__XXX
+
+
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "CANoeJitterMax" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMin" INT 0 0;
+BA_DEF_ BU_  "CANoeDrift" INT 0 0;
+BA_DEF_ BU_  "CANoeStartDelay" INT 0 0;
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "CANoeJitterMax" 0;
+BA_DEF_DEF_  "CANoeJitterMin" 0;
+BA_DEF_DEF_  "CANoeDrift" 0;
+BA_DEF_DEF_  "CANoeStartDelay" 0;
+
