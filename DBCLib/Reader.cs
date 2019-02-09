@@ -12,7 +12,7 @@ namespace DBCLib
     public bool AllowErrors
     {
       get;
-      private set;
+      set;
     } = false;
 
     public bool DisplayEntries
