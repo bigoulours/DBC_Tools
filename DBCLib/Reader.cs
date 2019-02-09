@@ -18,7 +18,7 @@ namespace DBCLib
     public bool DisplayEntries
     {
       get;
-      private set;
+      set;
     } = false;
 
     bool TryParse<T>(
