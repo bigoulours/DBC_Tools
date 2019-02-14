@@ -44,16 +44,16 @@ namespace DBCLib
     }
 
     [DataMember(EmitDefaultValue = false)]
-    public IEnumerable<KeyValuePair<int, string>> Mapping
+    public IEnumerable<KeyValuePair<long, string>> Mapping
     {
       get { return mapping; }
     }
-    List<KeyValuePair<int, string>> mapping = new List<KeyValuePair<int, string>>();
+    List<KeyValuePair<long, string>> mapping = new List<KeyValuePair<long, string>>();
 
     public override string ToString()
     {
       string mappingString = "";
-      foreach (KeyValuePair<int, string> pair in Mapping)
+      foreach (KeyValuePair<long, string> pair in Mapping)
       {
         mappingString += string.Format("|{0}|{1}", pair.Key, pair.Value);
       }
@@ -80,8 +80,8 @@ namespace DBCLib
 
         for (int i = 0; i < match.Groups[3].Captures.Count; i++)
         {
-          KeyValuePair<int, string> pair = new KeyValuePair<int, string>(
-            int.Parse(match.Groups[3].Captures[i].Value),
+          KeyValuePair<long , string> pair = new KeyValuePair<long, string>(
+            long.Parse(match.Groups[3].Captures[i].Value),
             StringUtility.DecodeQuotedString(match.Groups[4].Captures[i].Value)
             );
           mapping.Add(pair);
@@ -103,7 +103,7 @@ namespace DBCLib
     public override void WriteDBC(StreamWriter streamWriter)
     {
       string mappingString = "";
-      foreach (KeyValuePair<int, string> pair in Mapping)
+      foreach (KeyValuePair<long, string> pair in Mapping)
       {
         mappingString += string.Format(@" {0} {1}",
           pair.Key,
