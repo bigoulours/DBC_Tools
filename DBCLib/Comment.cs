@@ -17,7 +17,7 @@ namespace DBCLib
       set { }
     }
 
-    static string commentTerminatorRegexSubstring = @"""\s*;?\s*";
+    static string commentTerminatorRegexSubstring = @"""\s*;\s*";
 
     static Regex regexFirstLine = new Regex(
       string.Format(@"^{0}\s+{1}""{2}({3})?$",
@@ -176,7 +176,7 @@ namespace DBCLib
           break;
       }
 
-      streamWriter.WriteLine(string.Format(@"{0} {1}{2}",
+      streamWriter.WriteLine(string.Format(@"{0} {1}{2};",
         Symbol,
         contextString,
         StringUtility.EncodeAsQuotedString(Text)
