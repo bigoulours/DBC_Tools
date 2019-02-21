@@ -29,12 +29,25 @@ namespace DBCPrettyPrint
         if (overwriteExisting || !File.Exists(fileDst) || (new System.IO.FileInfo(fileDst).Length == 0))
         {
           Console.Title = fileSrc;
-          Console.WriteLine("R {0}", fileSrc);
-          List<object> entries = dbcReader.Read(fileSrc);
+          Console.WriteLine("L {0}", fileSrc);
 
+          List<KeyValuePair<uint, string>> errors = new List<KeyValuePair<uint, string>>();
+          List<KeyValuePair<uint, string>> warnings = new List<KeyValuePair<uint, string>>();
+
+          List<object> entries = dbcReader.Read(fileSrc, errors, warnings);
+
+          foreach (KeyValuePair<uint, string> error in errors)
+          {
+            Console.WriteLine("E {0}({1}): {2}", fileSrc, error.Key, error.Value);
+          }
+          foreach (KeyValuePair<uint, string> warning in warnings)
+          {
+            Console.WriteLine("W {0}({1}): {2}", fileSrc, warning.Key, warning.Value);
+          }
+        
           if (entries != null)
           {
-            Console.WriteLine("W {0}", fileDst);
+            Console.WriteLine("S {0}", fileDst);
             var currentCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             try
