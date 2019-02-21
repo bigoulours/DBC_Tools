@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -31,7 +32,7 @@ namespace DBCLib
       return null;
     }
 
-    public abstract bool TryParse(ref string line, ref uint numLines, StreamReader streamReader);
+    public abstract bool TryParse(ref ParseContext parseContext);
 
     public abstract void WriteDBC(StreamWriter streamWriter);
   }

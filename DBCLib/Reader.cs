@@ -22,14 +22,13 @@ namespace DBCLib
     } = false;
 
     bool TryParse<T>(
-      ref string line,
-      ref uint numLines,
-      StreamReader streamReader,
-      List<object> entries)
+      ref ParseContext parseContext,
+      List<object> entries
+      )
       where T : Entry, new()
     {
       T t = new T();
-      if (t.TryParse(ref line, ref numLines, streamReader))
+      if (t.TryParse(ref parseContext))
       {
         entries.Add(t);
         return true;
@@ -63,6 +62,8 @@ namespace DBCLib
         bool errors = false;
         bool exceptionThrown = false;
 
+        ParseContext parseContext = new ParseContext(streamReader);
+
         uint numLines = 0;
         if (!streamReader.EndOfStream)
         {
@@ -77,18 +78,18 @@ namespace DBCLib
               if (line.Trim().Length > 0)
               {
                 parsed =
-                  TryParse<DBCLib.AttributeValue>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<AttributeDefinition>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<AttributeDefault>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<BitTiming>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<Comment>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<Message>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<MessageTransmitters>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<NewSymbols>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<Nodes>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<Value>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<ValueTable>(ref line, ref numLines, streamReader, entries) ||
-                  TryParse<DBCLib.Version>(ref line, ref numLines, streamReader, entries)
+                  TryParse<DBCLib.AttributeValue>(ref parseContext, entries) ||
+                  TryParse<AttributeDefinition>(ref parseContext, entries) ||
+                  TryParse<AttributeDefault>(ref parseContext, entries) ||
+                  TryParse<BitTiming>(ref parseContext, entries) ||
+                  TryParse<Comment>(ref parseContext, entries) ||
+                  TryParse<Message>(ref parseContext, entries) ||
+                  TryParse<MessageTransmitters>(ref parseContext, entries) ||
+                  TryParse<NewSymbols>(ref parseContext, entries) ||
+                  TryParse<Nodes>(ref parseContext, entries) ||
+                  TryParse<Value>(ref parseContext, entries) ||
+                  TryParse<ValueTable>(ref parseContext, entries) ||
+                  TryParse<DBCLib.Version>(ref parseContext, entries)
                   ;
 
                 if (!parsed)

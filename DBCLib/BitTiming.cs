@@ -29,9 +29,9 @@ namespace DBCLib
         );
     }
 
-    public override bool TryParse(ref string line, ref uint numLines, StreamReader streamReader)
+    public override bool TryParse(ref ParseContext parseContext)
     {
-      Match match = Entry.MatchFirstLine(line, Symbol, regexFirstLine);
+      Match match = Entry.MatchFirstLine(parseContext.line, Symbol, regexFirstLine);
       if (match != null)
       {
         if (match.Groups.Count != 1)
@@ -39,11 +39,11 @@ namespace DBCLib
           throw new DataMisalignedException();
         }
 
-        line = null;
-        if (!streamReader.EndOfStream)
+        parseContext.line = null;
+        if (!parseContext.streamReader.EndOfStream)
         {
-          line = streamReader.ReadLine();
-          numLines++;
+          parseContext.line = parseContext.streamReader.ReadLine();
+          parseContext.numLines++;
         }
 
         return true;

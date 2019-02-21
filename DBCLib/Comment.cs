@@ -96,9 +96,9 @@ namespace DBCLib
         );
     }
 
-    public override bool TryParse(ref string line, ref uint numLines, StreamReader streamReader)
+    public override bool TryParse(ref ParseContext parseContext)
     {
-      Match match = Entry.MatchFirstLine(line, Symbol, regexFirstLine);
+      Match match = Entry.MatchFirstLine(parseContext.line, Symbol, regexFirstLine);
       if (match != null)
       {
         if (match.Groups.Count != 10)
@@ -132,24 +132,24 @@ namespace DBCLib
 
         bool incompleteText = (match.Groups[9].Value.Length == 0);
 
-        line = null;
-        while (!streamReader.EndOfStream)
+        parseContext.line = null;
+        while (!parseContext.streamReader.EndOfStream)
         {
-          line = streamReader.ReadLine();
-          numLines++;
+          parseContext.line = parseContext.streamReader.ReadLine();
+          parseContext.numLines++;
 
           if (!incompleteText)
           {
             break;
           }
 
-          match = regexLastLine.Match(line);
+          match = regexLastLine.Match(parseContext.line);
           if (match.Success)
           {
-            line = match.Groups[1].Value;
+            parseContext.line = match.Groups[1].Value;
             incompleteText = false;
           }
-          Text += "\n" + line;
+          Text += "\n" + parseContext.line;
         }
 
         return true;

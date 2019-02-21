@@ -67,9 +67,9 @@ namespace DBCLib
         );
     }
 
-    public override bool TryParse(ref string line, ref uint numLines, StreamReader streamReader)
+    public override bool TryParse(ref ParseContext parseContext)
     {
-      Match match = Entry.MatchFirstLine(line, Symbol, regexFirstLine);
+      Match match = Entry.MatchFirstLine(parseContext.line, Symbol, regexFirstLine);
       if (match != null)
       {
         if (match.Groups.Count != 5)
@@ -82,12 +82,12 @@ namespace DBCLib
         Size = uint.Parse(match.Groups[3].Value);
         Transmitter = match.Groups[4].Value;
 
-        line = null;
-        while (!streamReader.EndOfStream)
+        parseContext.line = null;
+        while (!parseContext.streamReader.EndOfStream)
         {
-          line = streamReader.ReadLine();
-          numLines++;
-          if (line.Trim().Length > 0)
+          parseContext.line = parseContext.streamReader.ReadLine();
+          parseContext.numLines++;
+          if (parseContext.line.Trim().Length > 0)
           {
             break;
           }
@@ -98,10 +98,10 @@ namespace DBCLib
         {
           additionalSignalFound = false;
 
-          if (line != null)
+          if (parseContext.line != null)
           {
             Signal signal = new Signal();
-            if (signal.TryParse(ref line, ref numLines, streamReader))
+            if (signal.TryParse(ref parseContext))
             {
               signals.Add(signal);
               additionalSignalFound = true;
@@ -270,9 +270,9 @@ namespace DBCLib
           );
       }
 
-      public override bool TryParse(ref string line, ref uint numLines, StreamReader streamReader)
+      public override bool TryParse(ref ParseContext parseContext)
       {
-        Match match = Entry.MatchFirstLine(line, Symbol, regexFirstLine);
+        Match match = Entry.MatchFirstLine(parseContext.line, Symbol, regexFirstLine);
         if (match != null)
         {
           if (match.Groups.Count != 13)
@@ -307,12 +307,12 @@ namespace DBCLib
 
           receivers.AddRange(match.Groups[12].Value.Split(','));
 
-          line = null;
-          while (!streamReader.EndOfStream)
+          parseContext.line = null;
+          while (!parseContext.streamReader.EndOfStream)
           {
-            line = streamReader.ReadLine();
-            numLines++;
-            if (line.Trim().Length > 0)
+            parseContext.line = parseContext.streamReader.ReadLine();
+            parseContext.numLines++;
+            if (parseContext.line.Trim().Length > 0)
             {
               break;
             }
