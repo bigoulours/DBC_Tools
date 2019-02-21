@@ -1,6 +1,5 @@
 VERSION ""
 
-
 NS_ : 
     NS_DESC_
     CM_
@@ -31,8 +30,9 @@ NS_ :
     BU_BO_REL_
     SG_MUL_VAL_
 
-BU_: XXX
+BS_:
 
+BU_: XXX
 
 BO_ 65 Global_PATS_Control_Info: 8 XXX
  SG_ immoControlData_T1 : 15|40@0+ (1,0) [0|0] "" XXX

@@ -1,6 +1,5 @@
 VERSION ""
 
-
 NS_ :
     NS_DESC_
     CM_
@@ -34,7 +33,6 @@ NS_ :
 BS_:
 
 BU_: XXX DSU HCU EPS IPAS
-
 
 BO_ 36 KINEMATICS: 8 XXX
  SG_ ACCEL_Y : 33|10@0+ (1,-512) [0|65535] "" XXX
@@ -166,9 +164,6 @@ BO_ 452 POWERTRAIN: 8 XXX
  SG_ ENGINE_RPM : 7|16@0+ (1,0) [0|65535] "rpm" XXX
  SG_ CHECKSUM : 63|8@0+ (1,0) [0|255] "" XXX
 
-
-
-
 CM_ SG_ 36 ACCEL_Y "unit is tbd";
 CM_ SG_ 36 STEERING_TORQUE "does not seem the steer torque, tbd";
 CM_ SG_ 36 YAW_RATE "verify";
@@ -186,6 +181,9 @@ CM_ SG_ 467 LOW_SPEED_LOCKOUT "in low speed lockout, system would always disenga
 CM_ SG_ 467 SET_SPEED "43 kph are shown as 28mph, so conversion isnt perfect";
 CM_ SG_ 921 UI_SET_SPEED "set speed shown in UI with user set unit";
 CM_ SG_ 1042 SET_ME_1 "unclear what this is, nut it's always 1 in drive traces";
+
+CM_ "CHFFR_METRIC 37 STEER_ANGLE STEER_ANGLE 0.36 180";
+
 VAL_ 295 GEAR 0 "P" 1 "R" 2 "N" 3 "D" 4 "B" ;
 VAL_ 466 CRUISE_STATE 8 "active" 7 "standstill" 1 "off" ;
 VAL_ 610 STATE 5 "override" 3 "enabled" 1 "disabled" ;
@@ -200,4 +198,3 @@ VAL_ 1042 RIGHT_LINE 3 "orange" 2 "double" 1 "solid" 0 "none" ;
 VAL_ 1042 LEFT_LINE 3 "orange" 2 "double" 1 "solid" 0 "none" ;
 VAL_ 1042 LDA_ALERT 3 "hold with continuous beep" 2 "LDA unavailable" 1 "hold" 0 "none" ;
 VAL_ 1553 UNITS 1 "km" 2 "miles" ;
-CM_ "CHFFR_METRIC 37 STEER_ANGLE STEER_ANGLE 0.36 180";

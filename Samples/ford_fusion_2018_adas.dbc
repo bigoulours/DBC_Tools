@@ -1,6 +1,5 @@
 VERSION ""
 
-
 NS_ : 
     NS_DESC_
     CM_
@@ -30,6 +29,8 @@ NS_ :
     BU_EV_REL_
     BU_BO_REL_
     SG_MUL_VAL_
+
+BS_:
 
 BU_: XXX
 
@@ -416,4 +417,3 @@ BO_ 1343 Object_63: 8 XXX
  SG_ V_Rel : 52|13@0- (0.01,0) [0|0] "m/s" XXX
  SG_ A_Rel : 33|10@0- (0.05,0) [0|0] "m/s2" XXX
  SG_ Angle : 12|10@0- (-0.1,0) [0|0] "deg" XXX
-
