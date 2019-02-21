@@ -38,18 +38,22 @@ namespace DBCLib
     }
 
     public List<object> Read(
-      string path
+      string path,
+      List<KeyValuePair<uint, string>> errors = null,
+      List<KeyValuePair<uint, string>> warnings = null
       )
     {
       using (StreamReader streamReader = new StreamReader(path, Encoding.Default, false))
       {
-        return Read(streamReader, path);
+        return Read(streamReader, path, errors, warnings);
       }
     }
 
     public List<object> Read(
       StreamReader streamReader,
-      string path
+      string path,
+      List<KeyValuePair<uint, string>> errors = null,
+      List<KeyValuePair<uint, string>> warnings = null
       )
     {
       List<object> entries = new List<object>();
@@ -59,23 +63,21 @@ namespace DBCLib
 
       try
       {
-        bool errors = false;
         bool exceptionThrown = false;
 
-        ParseContext parseContext = new ParseContext(streamReader);
+        ParseContext parseContext = new ParseContext(streamReader, errors, warnings);
 
-        uint numLines = 0;
         if (!streamReader.EndOfStream)
         {
-          string line = streamReader.ReadLine();
-          numLines++;
+          parseContext.line = streamReader.ReadLine();
+          parseContext.numLines++;
 
           do
           {
             bool parsed = false;
             try
             {
-              if (line.Trim().Length > 0)
+              if (parseContext.line.Trim().Length > 0)
               {
                 parsed =
                   TryParse<DBCLib.AttributeValue>(ref parseContext, entries) ||
@@ -94,11 +96,10 @@ namespace DBCLib
 
                 if (!parsed)
                 {
-                  errors = true;
                   Console.WriteLine("E {0}({1}): {2}",
                     path,
-                    numLines,
-                    line
+                    parseContext.numLines,
+                    parseContext.line
                     );
                 }
               }
@@ -110,36 +111,26 @@ namespace DBCLib
               Console.WriteLine(e.StackTrace);
               Console.WriteLine("X {0}({1}): {2}",
                 path,
-                numLines,
-                line
+                parseContext.numLines,
+                parseContext.line
                 );
+              parseContext.errors.Add(new KeyValuePair<uint, string>(parseContext.numLines, e.ToString()));
               break;
-            }
-            finally
-            {
-              if (exceptionThrown)
-              {
-                Console.WriteLine("{0}({1}): {2}",
-                  path,
-                  numLines,
-                  line
-                  );
-              }
             }
 
             if (!parsed)
             {
-              line = null;
+              parseContext.line = null;
               if (!streamReader.EndOfStream)
               {
-                line = streamReader.ReadLine();
-                numLines++;
+                parseContext.line = streamReader.ReadLine();
+                parseContext.numLines++;
               }
             }
-          } while (line != null);
+          } while (parseContext.line != null);
         }
 
-        if (exceptionThrown || (errors && !AllowErrors))
+        if (exceptionThrown || ((parseContext.errors.Count > 0) && !AllowErrors))
         {
           return null;
         }

@@ -57,6 +57,17 @@ namespace DBCLib
           throw new DataMisalignedException();
         }
 
+        if (parseContext.stage == ParseContext.Stage.Version)
+        {
+          parseContext.stage = ParseContext.Stage.NS;
+        }
+        else
+        {
+          parseContext.warnings.Add(new KeyValuePair<uint, string>(parseContext.numLines,
+            "NS_ (optional) expected immediately after VERSION."
+            ));
+        }
+
         string symbolsString = match.Groups[1].Value;
         if (symbolsString.Length > 0)
         {

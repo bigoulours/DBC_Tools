@@ -75,6 +75,21 @@ namespace DBCLib
           throw new DataMisalignedException();
         }
 
+        if (
+          (parseContext.stage == ParseContext.Stage.BO) ||
+          (parseContext.stage == ParseContext.Stage.CM) ||
+          (parseContext.stage == ParseContext.Stage.VAL)
+          )
+        {
+          parseContext.stage = ParseContext.Stage.VAL;
+        }
+        else
+        {
+          parseContext.warnings.Add(new KeyValuePair<uint, string>(parseContext.numLines,
+            "VAL_ (optional) expected immediately after BO_ (and associated SG_) or CM_."
+            ));
+        }
+
         ContextMessageId = uint.Parse(match.Groups[1].Value);
         ContextSignalName = match.Groups[2].Value;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -104,6 +105,20 @@ namespace DBCLib
         if (match.Groups.Count != 10)
         {
           throw new DataMisalignedException();
+        }
+
+        if (
+          (parseContext.stage == ParseContext.Stage.BO) ||
+          (parseContext.stage == ParseContext.Stage.CM)
+          )
+        {
+          parseContext.stage = ParseContext.Stage.CM;
+        }
+        else
+        {
+          parseContext.warnings.Add(new KeyValuePair<uint, string>(parseContext.numLines,
+            "CM_ (optional) expected immediately after BO_ (and associated SG_)."
+            ));
         }
 
         ContextMessageId = null;

@@ -77,6 +77,20 @@ namespace DBCLib
           throw new DataMisalignedException();
         }
 
+        if (
+          (parseContext.stage == ParseContext.Stage.BU) ||
+          (parseContext.stage == ParseContext.Stage.BO)
+          )
+        {
+          parseContext.stage = ParseContext.Stage.BO;
+        }
+        else
+        {
+          parseContext.warnings.Add(new KeyValuePair<uint, string>(parseContext.numLines,
+            "BO_ expected immediately after BU_."
+            ));
+        }
+
         Id = uint.Parse(match.Groups[1].Value);
         Name = match.Groups[2].Value;
         Size = uint.Parse(match.Groups[3].Value);

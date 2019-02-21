@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -37,6 +38,20 @@ namespace DBCLib
         if (match.Groups.Count != 1)
         {
           throw new DataMisalignedException();
+        }
+
+        if (
+          (parseContext.stage == ParseContext.Stage.Version) ||
+          (parseContext.stage == ParseContext.Stage.NS)
+          )
+        {
+          parseContext.stage = ParseContext.Stage.BS;
+        }
+        else
+        {
+          parseContext.warnings.Add(new KeyValuePair<uint, string>(parseContext.numLines,
+            "BS_ expected immediately after VERSION or NS_."
+            ));
         }
 
         parseContext.line = null;

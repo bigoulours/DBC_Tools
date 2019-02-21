@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -48,6 +49,17 @@ namespace DBCLib
         if (match.Groups.Count != 2)
         {
           throw new DataMisalignedException();
+        }
+
+        if (parseContext.stage == ParseContext.Stage.Init)
+        {
+          parseContext.stage = ParseContext.Stage.Version;
+        }
+        else
+        {
+          parseContext.warnings.Add(new KeyValuePair<uint, string>(parseContext.numLines,
+            "VERSION occurs multiple times."
+            ));
         }
 
         Text = StringUtility.SimplifyEmptyToNull(StringUtility.DecodeQuotedString(match.Groups[1].Value));
