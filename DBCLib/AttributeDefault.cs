@@ -18,7 +18,7 @@ namespace DBCLib
     }
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+{1}\s+(?:{2}|{3});?$",
+      string.Format(@"^{0}\s+{1}\s+(?:{2}|{3});$",
         Symbol,
         R.C.quotedStringValue,
         R.C.intValue,
@@ -86,7 +86,7 @@ namespace DBCLib
 
     public override void WriteDBC(StreamWriter streamWriter)
     {
-      streamWriter.WriteLine(string.Format("{0} {1} {2}",
+      streamWriter.WriteLine(string.Format("{0} {1} {2};",
         Symbol,
         StringUtility.EncodeAsQuotedString(Name),
         (Value is string) ? StringUtility.EncodeAsQuotedString(Value as string) : Value
