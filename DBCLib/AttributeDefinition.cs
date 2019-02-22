@@ -25,7 +25,7 @@ namespace DBCLib
     static string stringRegexSubstring = @"(STRING)";
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+(?:(BO_|BU_|SG_)\s+)?{1}\s+(?:{2}|{3}|{4})\s*;?$",
+      string.Format(@"^{0}\s+(?:(BO_|BU_|SG_)\s+)?{1}\s+(?:{2}|{3}|{4})\s*;$",
         Symbol,
         R.C.quotedStringValue,
         enumRegexSubstring,
@@ -199,7 +199,7 @@ namespace DBCLib
           break;
       }
 
-      streamWriter.WriteLine(string.Format("{0} {1}{2} {3}{4}",
+      streamWriter.WriteLine(string.Format("{0} {1}{2} {3}{4};",
         Symbol,
         contextString,
         StringUtility.EncodeAsQuotedString(Name),
