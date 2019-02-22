@@ -18,7 +18,7 @@ namespace DBCLib
     }
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+{1}\s+{2}(?:{3}|{4});?$",
+      string.Format(@"^{0}\s+{1}\s+{2}(?:{3}|{4});$",
         Symbol,
         R.C.quotedStringValue,
         R.C.context,
@@ -165,7 +165,7 @@ namespace DBCLib
           break;
       }
 
-      streamWriter.WriteLine(string.Format("{0} {1} {2}{3}",
+      streamWriter.WriteLine(string.Format("{0} {1} {2}{3};",
         Symbol,
         StringUtility.EncodeAsQuotedString(Name),
         contextString,
