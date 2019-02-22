@@ -21,7 +21,7 @@ namespace DBCLib
     static string transmittersRegexSubstring = @"(" + R.U.nodeName + @"(?:," + R.U.nodeName + @")*)";
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+{1}\s*:\s*{2};?$",
+      string.Format(@"^{0}\s+{1}\s*:\s*{2};$",
         Symbol,
         R.C.uintValue,
         transmittersRegexSubstring
@@ -92,7 +92,7 @@ namespace DBCLib
         transmittersString = " " + transmittersString;
       }
 
-      streamWriter.WriteLine(string.Format("{0} {1}:{2}",
+      streamWriter.WriteLine(string.Format("{0} {1}:{2};",
         Symbol,
         ContextMessageId,
         transmittersString
