@@ -18,13 +18,17 @@ namespace DBCLib
       set { }
     }
 
+    static string enumRegexSubstring =
+      @"(ENUM)\s+" + R.C.quotedStringValue +
+      @"(?:\s*,\s*" + R.C.quotedStringValue + @")*";
     static string intRegexSubstring = @"(INT)\s+" + R.C.uintValue + @"\s+" + R.C.uintValue;
     static string stringRegexSubstring = @"(STRING)";
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+(?:(BO_|BU_|SG_)\s+)?{1}\s+(?:{2}|{3})\s*;?$",
+      string.Format(@"^{0}\s+(?:(BO_|BU_|SG_)\s+)?{1}\s+(?:{2}|{3}|{4})\s*;?$",
         Symbol,
         R.C.quotedStringValue,
+        enumRegexSubstring,
         intRegexSubstring,
         stringRegexSubstring
         ),
@@ -40,6 +44,7 @@ namespace DBCLib
 
     public enum DataTypeEnum
     {
+      ENUM,
       INT,
       STRING
     }
@@ -89,6 +94,13 @@ namespace DBCLib
       string dataString = "";
       switch (DataType)
       {
+        case DataTypeEnum.ENUM:
+          dataString = "|" + values[0];
+          for (int i = 1; i < values.Count; ++i)
+          {
+            dataString += "|" + values[i];
+          }
+          break;
         case DataTypeEnum.INT:
           dataString = string.Format("|{0}|{1}", Minimum, Maximum);
           break;
@@ -111,7 +123,7 @@ namespace DBCLib
       Match match = Entry.MatchFirstLine(parseContext.line, Symbol, regexFirstLine);
       if (match != null)
       {
-        if (match.Groups.Count != 7)
+        if (match.Groups.Count != 10)
         {
           throw new DataMisalignedException();
         }
@@ -124,13 +136,26 @@ namespace DBCLib
 
         Name = StringUtility.DecodeQuotedString(match.Groups[2].Value);
 
-        if (match.Groups[3].Value == "INT")
+        if (match.Groups[3].Value == "ENUM")
+        {
+          DataType = DataTypeEnum.ENUM;
+          values = new List<string>();
+          values.Add(StringUtility.DecodeQuotedString(match.Groups[4].Value));
+          if (match.Groups[5].Captures.Count > 0)
+          {
+            foreach (Capture capture in match.Groups[5].Captures)
+            {
+              values.Add(StringUtility.DecodeQuotedString(capture.Value));
+            }
+          }
+        }
+        else if (match.Groups[6].Value == "INT")
         {
           DataType = DataTypeEnum.INT;
-          Minimum = int.Parse(match.Groups[4].Value);
-          Maximum = int.Parse(match.Groups[5].Value);
+          Minimum = int.Parse(match.Groups[7].Value);
+          Maximum = int.Parse(match.Groups[8].Value);
         }
-        else if (match.Groups[6].Value == "STRING")
+        else if (match.Groups[9].Value == "STRING")
         {
           DataType = DataTypeEnum.STRING;
         }
@@ -159,6 +184,13 @@ namespace DBCLib
       string dataString = "";
       switch (DataType)
       {
+        case DataTypeEnum.ENUM:
+          dataString = string.Format(" {0}", StringUtility.EncodeAsQuotedString(values[0]));
+          for (int i = 1; i < values.Count; ++i)
+          {
+            dataString += string.Format(",{0}", StringUtility.EncodeAsQuotedString(values[i]));
+          }
+          break;
         case DataTypeEnum.INT:
           dataString = string.Format(" {0} {1}", Minimum, Maximum);
           break;
