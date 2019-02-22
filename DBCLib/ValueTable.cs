@@ -19,7 +19,7 @@ namespace DBCLib
     }
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}\s+{1}(?:\s+{2}\s+{3})+\s*;?$",
+      string.Format(@"^{0}\s+{1}(?:\s+{2}\s+{3})+\s*;$",
         Symbol,
         R.C.valueTableName,
         R.C.intValue,
@@ -101,7 +101,7 @@ namespace DBCLib
           );
       }
 
-      streamWriter.WriteLine(string.Format("{0} {1}{2}",
+      streamWriter.WriteLine(string.Format("{0} {1}{2};",
         Symbol,
         Name,
         mappingString
