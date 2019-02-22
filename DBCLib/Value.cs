@@ -19,7 +19,7 @@ namespace DBCLib
     }
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^\s*{0}\s+{1}\s+{2}(?:\s+{3}\s+{4})+\s*;?$",
+      string.Format(@"^\s*{0}\s+{1}\s+{2}(?:\s+{3}\s+{4})+\s*;$",
         Symbol,
         R.C.uintValue,
         R.C.signalName,
@@ -126,7 +126,7 @@ namespace DBCLib
           );
       }
 
-      streamWriter.WriteLine(string.Format("{0} {1} {2}{3}",
+      streamWriter.WriteLine(string.Format("{0} {1} {2}{3};",
         Symbol,
         ContextMessageId,
         ContextSignalName,
