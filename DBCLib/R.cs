@@ -40,7 +40,7 @@
       public static string valueTableName = Aa0_;
 
       public static string doubleValue = @"-?\d+(?:\.\d+)?(?:[Ee][+-]\d+)?";
-      public static string intValue = @"-?\d+";
+      public static string intValue = @"-?[\d\.]+";
       public static string stringValue = @"(?:[^""]|\\"")*";
       public static string quotedStringValue = @"""" + stringValue + @"""";
       public static string uintValue = @"\d+";

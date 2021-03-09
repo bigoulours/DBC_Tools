@@ -127,7 +127,7 @@ namespace DBCLib
 
         if (match.Groups[9].Value.Length > 0)
         {
-          Value = int.Parse(match.Groups[9].Value);
+          Value = double.Parse(match.Groups[9].Value);
         }
         if (match.Groups[10].Value.Length > 0)
         {

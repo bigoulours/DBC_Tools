@@ -21,7 +21,7 @@ namespace DBCLib
     static string enumRegexSubstring =
       @"(ENUM)\s+" + R.C.quotedStringValue +
       @"(?:\s*,\s*" + R.C.quotedStringValue + @")*";
-    static string intRegexSubstring = @"(INT)\s+" + R.C.uintValue + @"\s+" + R.C.uintValue;
+    static string intRegexSubstring = @"(INT|FLOAT|HEX)\s+" + R.C.uintValue + @"\s+" + R.C.uintValue;
     static string stringRegexSubstring = @"(STRING)";
 
     static Regex regexFirstLine = new Regex(

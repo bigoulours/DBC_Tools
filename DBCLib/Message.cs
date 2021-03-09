@@ -91,7 +91,11 @@ namespace DBCLib
             ));
         }
 
-        Id = uint.Parse(match.Groups[1].Value);
+       if (uint.Parse(match.Groups[1].Value) > 2047) //COB-ID > 11-bit
+            { Id = uint.Parse(match.Groups[1].Value) - 2147483648; } //for J1939 IDs, 0x80000000 is added to the dbc file   //ToDo check behavior with CAN-Open 29.bit IDs
+       else
+            { Id = uint.Parse(match.Groups[1].Value); }
+
         Name = match.Groups[2].Value;
         Size = uint.Parse(match.Groups[3].Value);
         Transmitter = match.Groups[4].Value;

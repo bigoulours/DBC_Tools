@@ -19,7 +19,7 @@ namespace DBCLib
     }
 
     static Regex regexFirstLine = new Regex(
-      string.Format(@"^{0}:$", Symbol),
+      string.Format(@"^{0}\s*:$", Symbol),
       RegexOptions.Compiled
       );
 
